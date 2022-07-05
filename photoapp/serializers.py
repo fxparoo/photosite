@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from photoapp.models import PhotoRepo
+from photoapp.models import PhotoAlbum
 
 
-class PhotoRepoSerializer(serializers.ModelSerializer):
+class PhotoAlbumSerializer(serializers.ModelSerializer):
     class Meta:
-        model = PhotoRepo
+        model = PhotoAlbum
         fields = ['title', 'profile']

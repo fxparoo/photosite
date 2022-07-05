@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import PhotoRepo
+from .models import PhotoAlbum
 
 
-class PhotoRepoAdmin(admin.ModelAdmin):
+class PhotoAlbumAdmin(admin.ModelAdmin):
     list_display = ('title', 'profile', 'created_date', 'updated_date')
     list_filter = ('title',)
 
 
-admin.site.register(PhotoRepo)
+admin.site.register(PhotoAlbum)
