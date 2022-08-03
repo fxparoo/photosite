@@ -34,9 +34,10 @@ class PhotoAlbumViewSet(viewsets.ViewSet):
         serializer = PhotoAlbumSerializer(photo)
         return Response(serializer.data)
 
-    def delete(self, request, pk=id, *args, **kwargs):
+    def delete(self, request, pk):
         try:
-            photo = PhotoAlbum.objects.get(pk=pk)
+            queryset = PhotoAlbum.objects.all()
+            photo = get_object_or_404(queryset, pk=pk)
             if photo.delete():
                 return Response({"detail": "Photo deleted Succesfully."}, status=status.HTTP_204_NO_CONTENT)
         except PhotoAlbum.DoesNotExist:
