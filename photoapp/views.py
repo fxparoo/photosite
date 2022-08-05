@@ -7,6 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class PhotoAlbumViewSet(viewsets.ViewSet):
+    queryset = PhotoAlbum.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
 
@@ -35,10 +36,6 @@ class PhotoAlbumViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def delete(self, request, pk):
-        try:
-            queryset = PhotoAlbum.objects.all()
-            photo = get_object_or_404(queryset, pk=pk)
-            if photo.delete():
-                return Response({"detail": "Photo deleted Succesfully."}, status=status.HTTP_204_NO_CONTENT)
-        except PhotoAlbum.DoesNotExist:
-            return Response({"detail": "Photo can't be found."}, status=status.HTTP_400_BAD_REQUEST)
+        photo = get_object_or_404(PhotoAlbum, pk=pk)
+        photo.delete()
+        return Response({"detail": "Photo deleted Succesfully."}, status=status.HTTP_204_NO_CONTENT)
