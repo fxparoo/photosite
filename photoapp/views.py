@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status, filters, generics
+from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from photoapp.models import PhotoAlbum
@@ -7,6 +7,7 @@ from rest_framework.pagination import PageNumberPagination
 
 
 class PhotoAlbumViewSet(viewsets.ViewSet):
+    queryset = PhotoAlbum.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['title']
 
@@ -34,9 +35,7 @@ class PhotoAlbumViewSet(viewsets.ViewSet):
         serializer = PhotoAlbumSerializer(photo)
         return Response(serializer.data)
 
-    def delete(self, request, pk=id, *args, **kwargs):
-        photo = PhotoAlbum.objects.get(pk=pk)
+    def delete(self, request, pk):
+        photo = get_object_or_404(PhotoAlbum, pk=pk)
         photo.delete()
         return Response({"detail": "Photo deleted Succesfully."}, status=status.HTTP_204_NO_CONTENT)
-
-
